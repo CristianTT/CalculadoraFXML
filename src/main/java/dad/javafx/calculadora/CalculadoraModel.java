@@ -1,5 +1,8 @@
 package dad.javafx.calculadora;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class CalculadoraModel {
 
 	public static final char IGUAL = '=';
@@ -13,7 +16,7 @@ public class CalculadoraModel {
 	private Double operando;
 	private char operador;
 	private Boolean nuevoOperando;
-	private String pantalla;
+	private StringProperty pantalla = new SimpleStringProperty();
 
 	public CalculadoraModel() {
 			borrar();
@@ -24,8 +27,17 @@ public class CalculadoraModel {
 	 * 
 	 * @return Cadena de texto con el contenido de la pantalla de la calculdora.
 	 */
-	public String getPantalla() {
+	public StringProperty pantallaProperty() {
 		return pantalla;
+	}
+
+	/**
+	 * Devuelve el contenido de la pantalla de la calculadora.
+	 * 
+	 * @return Cadena de texto con el contenido de la pantalla de la calculdora.
+	 */
+	public String getPantalla() {
+		return pantalla.get();
 	}
 
 	/**
@@ -43,7 +55,7 @@ public class CalculadoraModel {
 	 */
 	public void borrarTodo() {
 		nuevoOperando = true;
-		pantalla = "0.0";
+		pantalla.set("0.0");
 	}
 
 	/**
@@ -54,7 +66,7 @@ public class CalculadoraModel {
 	 */
 	public void operar(char operador) {
 		nuevoOperando = true;
-		double operando2 = Double.parseDouble(pantalla);
+		double operando2 = Double.parseDouble(pantalla.get());
 		switch (this.operador) {
 		case SUMAR:
 			operando += operando2;
@@ -73,15 +85,15 @@ public class CalculadoraModel {
 			break;
 		}
 		this.operador = operador;
-		pantalla = "" + operando;
+		pantalla.set("" + operando);
 	}
 
 	/**
 	 * Inserta una coma en el operando actual (pantalla).
 	 */
 	public void insertarComa() {
-		if (!pantalla.contains("" + COMA)) {
-			pantalla += COMA;
+		if (!pantalla.get().contains("" + COMA)) {
+			pantalla.set(pantalla.get() + COMA);
 		}
 	}
 
@@ -94,9 +106,9 @@ public class CalculadoraModel {
 		if (digito >= '0' && digito <= '9') {
 			if (nuevoOperando) {
 				nuevoOperando = false;
-				pantalla = "";
+				pantalla.set("");
 			}
-			pantalla += digito;
+			pantalla.set(pantalla.get() + digito);
 		} else if (digito == COMA) {
 			insertarComa();
 		}

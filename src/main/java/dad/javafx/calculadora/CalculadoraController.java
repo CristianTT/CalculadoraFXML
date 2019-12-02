@@ -35,7 +35,7 @@ public class CalculadoraController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		pantalla.textProperty().bind(calculadora.pantallaProperty());
 	}
 
 	public void setScene(Scene scene) {
@@ -45,7 +45,6 @@ public class CalculadoraController implements Initializable {
 			numerosButtons[indiceButton] = (Button) scene.lookup("#numero" + indiceButton);
 			numerosButtons[indiceButton].setOnAction(e -> {
 				calculadora.insertar((char) ('0' + Integer.parseInt(((Button) (e.getSource())).getText())));
-				pantalla.setText(calculadora.getPantalla());
 			});
 		}
 	}
@@ -57,48 +56,40 @@ public class CalculadoraController implements Initializable {
 	@FXML
 	void sumar(ActionEvent event) {
 		calculadora.operar(CalculadoraModel.SUMAR);
-		pantalla.setText(calculadora.getPantalla());
 	}
 
 	@FXML
 	void restar(ActionEvent event) {
 		calculadora.operar(CalculadoraModel.RESTAR);
-		pantalla.setText(calculadora.getPantalla());
 	}
 
 	@FXML
 	void multiplicar(ActionEvent event) {
 		calculadora.operar(CalculadoraModel.MULTIPLICAR);
-		pantalla.setText(calculadora.getPantalla());
 	}
 
 	@FXML
 	void dividir(ActionEvent event) {
 		calculadora.operar(CalculadoraModel.DIVIDIR);
-		pantalla.setText(calculadora.getPantalla());
 	}
 
 	@FXML
 	void agregarComa(ActionEvent event) {
 		calculadora.insertarComa();
-		pantalla.setText(calculadora.getPantalla());
 	}
 
 	@FXML
 	void teclaC(ActionEvent event) {
 		calculadora.borrarTodo();
-		pantalla.setText(calculadora.getPantalla());
 	}
 
 	@FXML
 	void teclaCE(ActionEvent event) {
 		calculadora.borrar();
-		pantalla.setText(calculadora.getPantalla());
 	}
 
 	@FXML
 	void calcular(ActionEvent event) {
 		calculadora.operar(CalculadoraModel.IGUAL);
-		pantalla.setText(calculadora.getPantalla());
 	}
 }
